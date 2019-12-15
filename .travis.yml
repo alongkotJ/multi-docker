@@ -16,7 +16,7 @@ before_install:
 # 
 # script:
 #   - docker run jamespool/docker-react npm run test -- --coverage
-#  
+# 
 # instead should be:
 # 
 script:

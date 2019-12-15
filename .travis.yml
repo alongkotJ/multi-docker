@@ -1,0 +1,52 @@
+# language: generic 
+
+sudo: required
+services:
+  - docker
+
+# jamespool/docker-react just name for setting script test travis ci whhich container to 
+# do the test or something else no matter what -t value is. it can be abc but it has to 
+# be the exactly the same name both in before_install ann in script
+before_install:
+  - docker build -t jamespool/react-test -f ./client/Dockerfile.dev ./client
+
+# In the upcoming lecture we will be adding a script to our .travis.yml file. 
+# Due to a change in how the Jest library works with Create React App, 
+# we need to make a small modification:
+# 
+# script:
+#   - docker run jamespool/docker-react npm run test -- --coverage
+#  
+# instead should be:
+# 
+script:
+  - docker run -e CI=true jamespool/react-test npm run test
+
+after_success: 
+  - docker build -t jamespool/multi-client ./client
+  - docker build -t jamespool/multi-nginx ./nginx
+  - docker build -t jamespool/multi-server ./server
+  - docker build -t jamespool/multi-worker ./worker
+# Login docker through cli
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+# push to docker hub
+  - docker push jamespool/multi-client
+  - docker push jamespool/multi-nginx
+  - docker push jamespool/multi-server
+  - docker push jamespool/multi-worker
+
+# deploy:
+#   edge: true
+#   provider: elasticbeanstalk
+#   region: "us-east-2"
+#   app: "multi-docker"
+#   env: "MultiDocker-env"
+#   bucket_name: "elasticbeanstalk-us-east-2-142234334602"
+#   bucket_path: "multi-docker"
+#   on:
+#     branch: master
+#   access_key_id: $AWS_ACCESS_KEY
+#   secret_access_key: $AWS_SECRET_KEY
+
+# access_key_id: $AWS_ACCESS_KEY
+# secret_access_key: $AWS_SECRET_KEY

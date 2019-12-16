@@ -2,13 +2,13 @@ version: "3"
 
 services: 
 
-  postgres: 
+  postgres:  # HOSTNAME
     image: "postgres:latest"
     
-  redis:
+  redis:  # HOSTNAME
     image: "redis:latest"
 
-  nginx: 
+  nginx:  # HOSTNAME
     restart: always
     build: 
       dockerfile: Dockerfile.dev
@@ -16,7 +16,7 @@ services:
     ports: 
       - "3050:80"
     
-  api:
+  api:  # HOSTNAME
     build: 
       dockerfile: Dockerfile.dev
       context: ./server
@@ -34,7 +34,7 @@ services:
     depends_on:
       - postgres
 
-  client: 
+  client:  # HOSTNAME
     build: 
       dockerfile: Dockerfile.dev
       context: ./client
@@ -42,7 +42,7 @@ services:
       - /app/node_modules
       - ./client:/app
 
-  worker: 
+  worker:  # HOSTNAME
     build: 
       dockerfile: Dockerfile.dev
       context: ./worker

@@ -11,7 +11,7 @@ class Fib extends Component {
     constructor(props) {
         super(props);
 
-        state = {
+        this.state = {
             seenIndexes: [],
             values: {},
             index: ""

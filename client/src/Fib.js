@@ -2,10 +2,20 @@ import React, { Component } from 'react';
 import axios from "axios";
 
 class Fib extends Component {
-    state = {
-        seenIndexes: [],
-        values: {},
-        index: ""
+    // state = {
+    //     seenIndexes: [],
+    //     values: {},
+    //     index: ""
+    // }
+
+    constructor(props) {
+        super(props);
+
+        state = {
+            seenIndexes: [],
+            values: {},
+            index: ""
+        }
     }
 
     componentDidMount() {
@@ -20,6 +30,7 @@ class Fib extends Component {
 
     async fetchIndexes() {
         const seenIndexes = await axios.get("/api/values/all");
+        console.log("fetchIndexes => seenIndexes", seenIndexes);
         this.setState({seenIndexes: seenIndexes.data});
     }
 

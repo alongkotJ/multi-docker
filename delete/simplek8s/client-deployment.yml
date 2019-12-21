@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: client-deployment
+spec: 
+  replicas: 1
+  selector:
+    matchLabels:
+      component: web
+  template:
+    metadata: 
+      labels:
+        component: web
+    spec: 
+      containers: 
+        - name: client
+          image: jamespool/multi-client
+          ports: 
+            - containerPort: 3000
+
+
+# docker build -t jamespool/multi-client:v1 .
+# 
+# docker push jamespool/multi-client
+# 
+# kubectl set image deployment/client-deploymnet / 
+# client=jamespool/multi-client:v1

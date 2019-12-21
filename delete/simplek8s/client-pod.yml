@@ -1,0 +1,25 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: client-pod
+  labels: 
+    component: web
+spec:
+  containers:
+    - name: client
+      image: jamespool/multi-worker
+      ports: 
+        - containerPort: 3000
+    # - name: client
+    #   image: jamespool/multi-client
+    #   ports: 
+    #     - containerPort: 3000
+    # - name: client
+    #   image: jamespool/multi-client
+    #   ports: 
+    #     - containerPort: 3000
+    # - name: client
+    #   image: jamespool/multi-client
+    #   ports: 
+    #     - containerPort: 3000
+
